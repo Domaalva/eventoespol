@@ -9,17 +9,14 @@ import '../models/notificacion.dart';
 /// EventoESPOL (FastAPI). Cada ViewModel usa esta clase para leer/escribir
 /// datos, sin conocer los detalles de la conexión HTTP.
 ///
-/// IMPORTANTE: cambia [baseUrl] por la URL real de tu backend.
-/// - Si corres el backend en el mismo Codespace: usa la URL pública que te
-///   da Codespaces para el puerto 8000 (algo como
-///   https://tu-codespace-8000.app.github.dev).
-/// - Si corres todo en tu computadora local: usa http://127.0.0.1:8000
+/// NOTA: Usa /api/ que es interceptado por el servidor proxy frontend_server.py
+/// que redirecciona a localhost:8000 internamente.
 class ApiService {
-  static const String baseUrl = "http://127.0.0.1:8000";
+  static const String baseUrl = "";
 
   // ---------- Eventos (Henry Olvera) ----------
   static Future<List<Evento>> getEventos({String? categoria}) async {
-    final uri = Uri.parse(baseUrl + "/eventos").replace(
+    final uri = Uri.parse("/api/eventos").replace(
       queryParameters: categoria != null ? {"categoria": categoria} : null,
     );
     final res = await http.get(uri);
@@ -32,7 +29,7 @@ class ApiService {
 
   static Future<Evento> crearEvento(Evento evento) async {
     final res = await http.post(
-      Uri.parse(baseUrl + "/eventos"),
+      Uri.parse("/api/eventos"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(evento.toJson()),
     );
@@ -45,7 +42,7 @@ class ApiService {
   // ---------- Inscripciones (Domenika Arboleda) ----------
   static Future<Inscripcion> inscribirse(int eventoId, String usuario) async {
     final res = await http.post(
-      Uri.parse(baseUrl + "/inscripciones"),
+      Uri.parse("/api/inscripciones"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({"evento_id": eventoId, "usuario": usuario}),
     );
@@ -56,7 +53,7 @@ class ApiService {
   }
 
   static Future<List<Inscripcion>> getMisInscripciones(String usuario) async {
-    final res = await http.get(Uri.parse(baseUrl + "/inscripciones/$usuario"));
+    final res = await http.get(Uri.parse("/api/inscripciones/$usuario"));
     if (res.statusCode != 200) {
       throw Exception("Error al cargar inscripciones: ${res.body}");
     }
@@ -66,7 +63,7 @@ class ApiService {
 
   // ---------- Notificaciones (Enrique Rosado) ----------
   static Future<List<Notificacion>> getNotificaciones(String usuario) async {
-    final res = await http.get(Uri.parse(baseUrl + "/notificaciones/$usuario"));
+    final res = await http.get(Uri.parse("/api/notificaciones/$usuario"));
     if (res.statusCode != 200) {
       throw Exception("Error al cargar notificaciones: ${res.body}");
     }
@@ -77,7 +74,7 @@ class ApiService {
   static Future<Notificacion> generarNotificacion(
       String usuario, String mensaje, String tipo) async {
     final res = await http.post(
-      Uri.parse(baseUrl + "/notificaciones"),
+      Uri.parse("/api/notificaciones"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({"usuario": usuario, "mensaje": mensaje, "tipo": tipo}),
     );
