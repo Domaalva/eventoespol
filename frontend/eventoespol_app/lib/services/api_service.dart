@@ -15,8 +15,7 @@ import '../models/notificacion.dart';
 ///   https://tu-codespace-8000.app.github.dev).
 /// - Si corres todo en tu computadora local: usa http://127.0.0.1:8000
 class ApiService {
-  static const String baseUrl = "http://localhost:8000";
-
+  static const String baseUrl = "https://fuzzy-giggle-pjrj54gxg77q3r7g9-8000.app.github.dev";
   // ---------- Eventos (Henry Olvera) ----------
   static Future<List<Evento>> getEventos({String? categoria}) async {
     final uri = Uri.parse(baseUrl + "/eventos").replace(

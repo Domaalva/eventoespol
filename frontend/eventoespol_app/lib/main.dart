@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'theme.dart';
 import 'viewmodels/session_viewmodel.dart';
 import 'viewmodels/eventos_viewmodel.dart';
 import 'viewmodels/inscripciones_viewmodel.dart';
@@ -29,10 +30,7 @@ class EventoEspolApp extends StatelessWidget {
       child: MaterialApp(
         title: 'EventoESPOL',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorSchemeSeed: const Color(0xFF1F3864),
-          useMaterial3: true,
-        ),
+        theme: AppTheme.theme,
         home: const HomeShell(),
       ),
     );
@@ -64,9 +62,13 @@ class _HomeShellState extends State<HomeShell> {
         selectedIndex: _indiceActual,
         onDestinationSelected: (i) => setState(() => _indiceActual = i),
         destinations: const [
-          NavigationDestination(icon: Icon(Icons.event), label: "Eventos"),
-          NavigationDestination(icon: Icon(Icons.assignment_turned_in), label: "Inscripciones"),
-          NavigationDestination(icon: Icon(Icons.notifications), label: "Notificaciones"),
+          NavigationDestination(icon: Icon(Icons.event_outlined), selectedIcon: Icon(Icons.event), label: "Eventos"),
+          NavigationDestination(
+              icon: Icon(Icons.assignment_turned_in_outlined),
+              selectedIcon: Icon(Icons.assignment_turned_in),
+              label: "Inscripciones"),
+          NavigationDestination(
+              icon: Icon(Icons.notifications_outlined), selectedIcon: Icon(Icons.notifications), label: "Notificaciones"),
         ],
       ),
     );
