@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from . import models
 from .database import engine
@@ -10,6 +11,15 @@ app = FastAPI(
     title="EventoESPOL API",
     description="Backend del proyecto de Lenguajes de Programación - Organización de eventos ESPOL",
     version="0.1.0",
+)
+
+# Necesario para conectar Flutter Web con FastAPI
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],      # Para desarrollo/pruebas
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(eventos.router)
