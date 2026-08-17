@@ -260,7 +260,13 @@ class _EventosScreenState extends State<EventosScreen> {
                               return Padding(
                                 padding: const EdgeInsets.only(right: 8),
                                 child: ChoiceChip(
-                                  label: Text(categoria),
+                                  label: Text(
+  categoria,
+  style: TextStyle(
+    color: seleccionada ? const Color(0xFF1C2745) : Colors.white,
+    fontWeight: FontWeight.w600,
+  ),
+),
                                   selected: seleccionada,
                                   onSelected: (_) {
                                     vm.categoriaSeleccionada = categoria;
